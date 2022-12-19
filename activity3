@@ -1,0 +1,246 @@
+1: Write a query which fetches and displays all the students who have an email id. 
+A: 
+   select * from Student_Info 
+   where Email_id is not null; 
+ 
+2:  Write a query which displays the number of students in each branch. 
+A: 
+        select branch,count(*) as No_Of_Students from Student_Info 
+        group by Branch; 
+ 
+3: Write a query which displays the marks and register number of all students who has scored marks    > 50% . 
+A: 
+       select Student_Marks.marks,Student_Info.Reg_Number from Student_Info  
+       inner join Student_Marks on Student_Marks.Reg_Number=Student_Info.Reg_Number 
+        where marks>50; 
+ 
+4: Write a query which displays the student name, registration number and their GPA in descending order of GPA. 
+A: 
+      select Student_Name,Student_Info.Reg_Number,GPA from Student_Info 
+      inner join Student_Result on Student_Result.Reg_Number=Student_Info.Reg_Number 
+      order by GPA desc; 
+ 
+5: Write a query which displays the student information in ascending order of the student’s name. 
+A: 
+          select * from Student_Info 
+          order by Student_Name; 
+ 
+6: Write a query which displays the information of students in ascending order of their age. 
+A: 
+        select * from Student_Info 
+        order by extract (YEAR from (sysdate - Date_of_Birth) YEAR TO MONTH); 
+ 
+7: Write a query which will retrieve the registration number, student name, subject name , semester # and the respective marks of the subject. 
+A: 
+ 
+        select Student_Info.Reg_Number,Student_Name,Subject_Name,Student_Result.Semester,Marks                          from Student_Info 
+      inner join Student_Result on Student_Result.Reg_Number=Student_Info.Reg_Number 
+      inner join Student_Marks on Student_Marks.Reg_Number=Student_Info.Reg_Number 
+      inner join Subject_Master on Subject_Master.Subject_Code=Student_Marks.Subject_Code; 
+ 
+8. Write a query which displays the student’s registration number, student name, marks and   ssemester# for all semesters ordered by registration number and semester#. 
+ 
+A: 
+           select Student_Info.Reg_Number,Student_Name,Marks,Student_Result.Semester from          Student_Info 
+         inner join Student_Result on Student_Result.Reg_Number=Student_Info.Reg_Number 
+         inner join Student_Marks on Student_Marks.Reg_Number=Student_Info.Reg_Number 
+         order by Student_Info.Reg_Number,Student_Result.Semester; 
+ 
+9: Write a query to display the student name , registration number , subject code, subject name, marks and semester # of all the students who have scored more than 50%. NOTE, the subject code and the subject name should be displayed in this particular format “Subject Code- Subject Name”. 
+ 
+A: 
+       select Student_Name,Student_Info.Reg_Number,Subject_Master.Subject_Code as "Subject            Code",Subject_Name as "Subject Name",Marks,Student_Result.Semester from Student_Info 
+  inner join Student_Result on Student_Result.Reg_Number=Student_Info.Reg_Number 
+  inner join Student_Marks on Student_Marks.Reg_Number=Student_Info.Reg_Number 
+  inner join Subject_Master on Subject_Master.Subject_Code=Student_Marks.Subject_Code; 
+ 
+10: Write a query to display the registration number and GPA of each student in such a way that the students who are eligible for scholarship are displayed first. 
+ 
+A: 
+         select Student_Info.Reg_Number,GPA from Student_Info 
+         inner join Student_Result on Student_Result.Reg_Number=Student_Info.Reg_Number 
+        order by Is_Eligible_Scholarship desc; 
+ 
+11: Write a query to display the registration number, student name, semester number and GPA of students such that students with high GPA are displayed on top. 
+ 
+A: 
+        select Student_Info.Reg_Number,Student_Name,Student_Result.Semester,GPA from        Student_Info 
+     inner join Student_Result on Student_Result.Reg_Number=Student_Info.Reg_Number 
+        order by GPA DESC; 
+ 
+12: Write a query to display registration number, student name, the marks of the students, and the weighted marks. Weighted Marks= marks * weightage %/100 
+ 
+A: 
+   select Student_Info.Reg_Number,Student_Name,Marks,(Marks*Weightage/100) "weighted marks"      from Student_Info 
+     inner join Student_Marks on Student_Marks.Reg_Number=Student_Info.Reg_Number 
+     inner join Subject_Master on Subject_Master.Subject_Code=Student_Marks.Subject_Code; 
+ 
+
+[Yesterday 5:29 pm] S Rathod, Vaishnavi (Cognizant)
+[5:27 pm] S Rathod, Vaishnavi (Cognizant)
+13: Write a query to display all the students whose name starts with “M”. 
+ 
+      select * from Student_Info 
+    where Student_Name like 'M%'; 
+ 
+14: Writer a query which retrieves student name, registration number and student marks whose marks is between 60 and 100. 
+ 
+A: 
+     select Student_Name,Student_Info.Reg_Number,Marks from Student_Info 
+     inner join Student_Marks on Student_Marks.Reg_Number=Student_Info.Reg_Number 
+     where marks between 60 and 100; 
+ 
+15: Write a query which retrieves student_name, registration number and student marks whose name does not start with Character “J”. 
+ 
+A: 
+     select Student_Name,Student_Info.Reg_Number,Marks from Student_Info 
+     inner join Student_Marks on Student_Marks.Reg_Number=Student_Info.Reg_Number 
+     where Student_Name not like 'J%'; 
+ 
+16: Write a query which retrieves student name , registration number and marks of those subjects whose subject code is either EE01DCF or EC02MUP. Rule: Do not use OR operator 
+ 
+A: 
+   select Student_Name,Student_Info.Reg_Number,Marks from Student_Info 
+   inner join Student_Marks on Student_Marks.Reg_Number=Student_Info.Reg_Number 
+   inner join Subject_Master on Subject_Master.Subject_Code=Student_Marks.Subject_Code 
+   where Subject_Master.Subject_Code In ('EE01DCF','EC02MUP'); 
+ 
+17: Write a query which retrieves all the students whose name ends with “on”. 
+ 
+A: 
+     select * from Student_Info 
+     where Student_Name like '%on'; 
+ 
+18: Write a query which retrieves the student name , registration number and their respective marks in all semesters whose has an email address. 
+ 
+A: 
+     select Student_Name,Student_Info.Reg_Number,Marks from Student_Info 
+     inner join Student_Marks on Student_Marks.Reg_Number=Student_Info.Reg_Number 
+     where Email_id is not null; 
+ 
+19: Write a query to display student information such as name, branch in capital letters. 
+ 
+A: 
+          select upper(Student_Name),upper(Branch) from Student_Info; 
+ 
+20: Write a query to displays all details in subject_master in small letters. 
+ 
+A: 
+         select lower(Subject_Code),lower(Subject_Name),lower(Weightage) from Subject_Master; 
+ 
+ 
+21: Write a query to display the student name and branch in the following format, “<Student Name>with <registration number> is studying in Branch <branch>”. 
+ 
+A: 
+       select Student_Name ||' with '|| Reg_Number ||' is studying in Branch '|| branch as 
+              StuData       from Student_Info; 
+22: Write two separate queries to display the registration number date of birth of all the students in the following formats · 2011/07/23 · July 23, 2011 
+A: 
+ 
+          select Reg_Number,to_char(Date_of_Birth,'yyyy/mm/dd') from Student_Info; 
+ 
+          select Reg_Number,to_char(Date_of_Birth,'Month dd, yyyy') from Student_Info; 
+ 
+ 
+23: Write a query to display age of each student along with name, contact number and email id. Age = Number of months between DOB and current date /12. 
+ 
+A: 
+       select extract (YEAR from (sysdate-Date_of_Birth) YEAR to MONTH ) as                                  Age,Student_Name,Contact_Number,Email_id from Student_Info;  
+ 
+ 
+24: Write a query to display the registration number, student name and average marks secured by students in each semester. 
+A: 
+ 
+    select Student_Info.Reg_Number,Student_Name,Avg(marks) as Average,semester from    Student_Info 
+     inner join Student_Marks on Student_Marks.Reg_Number=Student_Info.Reg_Number 
+     group by Student_Info.Reg_Number,Student_Name,semester; 
+ 
+25: Pick the maximum mark from the students_marks and display the student registration number and name of those students who have secured the maximum mark. Rule: Use sub query. 
+ 
+A: 
+      select sm.marks,Si.Reg_number,Si.Student_Name from student_marks sm,student_Info Si 
+     where sm.Reg_number=Si.Reg_number and sm.marks=(select max(marks) from  
+     student_marks sm); 
+ 
+26: Pick the maximum marks secured in the subject “ EI05IP” and display the student name and registration number of the student who has secured it. Rule: Use sub query. 
+ 
+A: 
+       select sm.marks,Si.Student_Name,Si.Reg_number from 
+      student_marks sm, Student_Info Si  
+      where sm.Reg_Number=Si.Reg_Number and sm.marks=(select max(sm.marks)  
+      from student_marks sm where SUBJECT_CODE in 'EI05IP'); 
+ 
+ 
+27: Write a query to display total number of candidates eligible for scholarship. 
+ 
+A: 
+      select count(*) from Student_Info 
+     INNER JOIN Student_Result on Student_Result.Reg_Number=Student_Info.Reg_Number 
+    where Is_Eligible_Scholarship = 'Y'; 
+ 
+28: Write a query to display the details of students who have secured maximum GPA in each semester. Hint: Use GROUPBY 
+ 
+A: 
+      select max(GPA) as "Maximum Marks Secured" from Student_Result 
+     group by semester; 
+ 
+29: Write a query to display the student name, registration number and GPA who are eligible for scholarship. 
+ 
+A: 
+      select Student_Name,Student_Info.Reg_Number,GPA from Student_Info 
+     INNER JOIN Student_Result on Student_Result.Reg_Number=Student_Info.Reg_Number 
+    where Is_Eligible_Scholarship = 'Y'; 
+ 
+30: Write a query to display the average GPA for each semester. Display the semester number and the average. Hint: Average = Total GPA of all students in a semester/total number of students in a semester Rule: Use AVG function 
+ 
+A: 
+      select Avg(GPA) "Average",semester from Student_Result 
+      group by semester; 
+ 
+31: Create a view “STUDENT_GPA_<employee_id>” which has the following details student name, registration number, semester number and GPA. 
+ 
+A: 
+       create view STUDENT_GPA As ( 
+       select Si.Student_Name,Si.Reg_Number,Sr.semester,Sr.GPA 
+      from Student_Result Sr inner join 
+      Student_Info Si on Si.Reg_Number=Sr.Reg_Number); 
+ 
+32: From the view STUDENT_GPA _<employee_id> display student name, registration number,semester number and GPA, whose GPA is greater than 5. 
+ 
+A: 
+    select STUDENT_NAME,REG_NUMBER,SEMESTER,GPA from STUDENT_GPA 
+    where GPA > 5; 
+ 
+33: Create a view “STUDENT_AVERAGE_GPA_<employee_id>” which has the following details. Student name, registration number and average GPA he has scored across semesters. 
+ 
+A: 
+     CREATE VIEW STUDENT_AVERAGE_GPA AS ( 
+     SELECT Si.Student_Name,Si.Reg_Number,AVG(Sr.GPA) As Average,Sr.SEMESTER from        Student_Result Sr 
+   inner join Student_Info Si on Si.Reg_Number=Sr.Reg_Number 
+   group by Sr.SEMESTER,Si.Student_Name,Si.Reg_Number); 
+ 
+34: From the view STUDENT_AVERAGE_GPA_<employee_id> diplay Student name, registration number and average GPA whose average GPA is greater than 7. 
+ 
+A: 
+         select STUDENT_NAME,REG_NUMBER,Average from STUDENT_AVERAGE_GPA 
+         where Average>7; 
+ 
+35: Write a query which will display all the student records , if the student email id is null it should be displayed as “no valid email address”. 
+ 
+A: 
+   Select     REG_NUMBER,STUDENT_NAME,BRANCH,CONTACT_NUMBER,DATE_OF_BIRTH,DATE_OF_JOINING,ADDRESS,NVL(EMAIL,'no valid email address')email from student_info 
+ 
+36: Write a query which will display the student name, branch,registration number , semester       number and result. 
+  Display the full name of EEE as well as ECE branch as mentioned below,  
+  If EEE then ‘Electrical and Electronic Engineering’  
+  If ECE then Electronics and Communication Engineering. 
+ 
+A:  
+     select STUDENT_NAME, 
+    case  
+    when BRANCH like 'ECE' then 'Electronics and Communication Engineering' 
+    else 'Electrical and Electronic Engineering' 
+    end as BRANCH,Student_Info.REG_NUMBER,semester 
+    from Student_Info inner join Student_Marks 
+    on Student_Marks.REG_NUMBER=Student_Info.REG_NUMBER; 
+
